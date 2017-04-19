@@ -9,8 +9,8 @@ import java.util.Set;
 public class Main {
 
     public static void main(String[] args) {
-        ProductExceptSelf p = new ProductExceptSelf();
-        int []inputs = {1};
-        System.out.println(Arrays.toString(p.productExceptSelf(inputs)));
+        int []input = {2,1};
+        SearchInRotatedArray s = new SearchInRotatedArray();
+        System.out.println(s.search(input, 2));
     }
 }
