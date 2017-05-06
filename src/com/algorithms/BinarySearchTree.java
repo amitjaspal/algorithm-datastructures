@@ -1,6 +1,7 @@
 package com.algorithms;
 
-import java.util.Stack;
+import java.util.*;
+import java.util.LinkedList;
 
 
 /**
@@ -13,10 +14,12 @@ public class BinarySearchTree {
     int val;
     TreeNode left;
     TreeNode right;
+    TreeNode neighbour;
     TreeNode(int x){
       this.val = x;
       this.left = null;
       this.right = null;
+      this.neighbour = null;
     }
   }
 
@@ -116,5 +119,77 @@ public class BinarySearchTree {
     if(n2 != null) return n2;
     if(root.val == p || root.val == q) return root;
     return null;
+  }
+
+  public List<List<Integer>> verticalOrder() {
+    Map<Integer, List<Integer>> nodesPerLevel = new TreeMap<>();
+    traverseTree(nodesPerLevel,root);
+    List<List<Integer>> answer = new ArrayList<>();
+    for(Map.Entry<Integer, List<Integer>> e : nodesPerLevel.entrySet()){
+      //System.out.println(e.getKey());
+      System.out.println(Arrays.toString(e.getValue().toArray()));
+      answer.add(e.getValue());
+    }
+    return answer;
+  }
+
+  class VerticalNode{
+    TreeNode n;
+    int level;
+    VerticalNode(TreeNode n, int level){
+      this.n = n;
+      this.level = level;
+    }
+  }
+  private void traverseTree(Map<Integer, List<Integer>> nodesPerLevel, TreeNode root) {
+    if (root != null) {
+      Queue<VerticalNode> q = new LinkedList<>();
+      q.add(new VerticalNode(root, 0));
+      while (q.size() > 0) {
+        VerticalNode tmp = q.poll();
+        List<Integer> l = nodesPerLevel.getOrDefault(tmp.level, new ArrayList<Integer>());
+        l.add(tmp.n.val);
+        nodesPerLevel.put(tmp.level, l);
+        if (tmp.n.left != null) q.add(new VerticalNode(tmp.n.left, tmp.level - 1));
+        if (tmp.n.right != null) q.add(new VerticalNode(tmp.n.right, tmp.level + 1));
+      }
+    }
+  }
+
+  public List<List<Integer>> levelOrder() {
+    List<List<Integer>> ans = new ArrayList<>();
+    Queue<TreeNode> q = new LinkedList<>();
+    q.add(root);
+    while(q.size() > 0){
+      Queue<TreeNode> tmp = new LinkedList<>();
+      List<Integer> x = new ArrayList<>();
+      while(q.size() > 0){
+        TreeNode n = q.poll();
+        x.add(n.val);
+        if(n.left != null)tmp.add(n.left);
+        if(n.right != null)tmp.add(n.right);
+      }
+      q = tmp;
+      System.out.println(Arrays.toString(x.toArray()));
+      ans.add(x);
+    }
+    return ans;
+  }
+
+
+  public void connect() {
+    Queue<VerticalNode> q = new LinkedList<>();
+    q.add(new VerticalNode(root, 0));
+    VerticalNode prev = null;
+    while(q.size() > 0){
+      VerticalNode tmp = q.poll();
+      if(prev != null && prev.level == tmp.level){
+        prev.n.neighbour = tmp.n;
+
+      }
+      if(tmp.n.left != null) q.add(new VerticalNode(tmp.n.left, tmp.level + 1));
+      if(tmp.n.right != null) q.add(new VerticalNode(tmp.n.left, tmp.level + 1));
+      prev = tmp;
+    }
   }
 }
