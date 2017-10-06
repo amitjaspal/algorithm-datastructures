@@ -1,2 +1,2 @@
 # algorithm-datastructures
-This repository is to keep track of all the problems I worked on which are related to data structures and algorithms.
+This repository is to keep track of all algorithm and data-structure problems that I keep myself busy with :P

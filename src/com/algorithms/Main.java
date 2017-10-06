@@ -10,11 +10,10 @@ import java.util.Set;
 public class Main {
 
     public static void main(String[] args) {
-      MaximumSqurae obj = new MaximumSqurae();
-      char [][]input = {{'1', '0', '1', '0', '0'},
-                        {'1', '0', '1', '1', '1'},
-                        {'1', '1', '1', '1', '1'},
-                        {'1', '0', '0', '1', '0'}};
-      System.out.println(obj.maximalSquare(input));
+      int []input = {1,2,6};
+      CircularLinkedList obj = new CircularLinkedList();
+      obj.init(input);
+      obj.insert(4);
+      obj.printLL();
     }
 }
